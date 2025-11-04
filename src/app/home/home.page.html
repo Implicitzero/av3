@@ -1,14 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      🍎 Loja de Frutas - AV3
+       Cadastro de Preço LCM Hortifruti - AV3
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div class="container">
-    <!-- Formulário -->
+    <!-- Formulário lindão -->
     <ion-card>
       <ion-card-header>
         <ion-card-title>
@@ -27,7 +27,7 @@
           </ion-item>
           
           <ion-item>
-            <ion-label position="stacked">Preço (R$)</ion-label>
+            <ion-label position="stacked">Preço KG (R$)</ion-label>
             <ion-input 
               type="number" 
               [(ngModel)]="novaFruta().preco" 
@@ -64,7 +64,7 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Lista de Frutas -->
+    <!-- Listinha de Frutas -->
     <ion-card>
       <ion-card-header>
         <ion-card-title>📦 Frutas Cadastradas</ion-card-title>
@@ -94,7 +94,7 @@
                       color="warning" 
                       (click)="editarFruta(fruta)"
                     >
-                      <ion-icon slot="icon-only" name="create"></ion-icon>
+                      <ion-icon slot="icon-only" name="construct-outline"></ion-icon>
                     </ion-button>
                     
                     <ion-button 
@@ -102,7 +102,7 @@
                       color="danger" 
                       (click)="excluirFruta(fruta.id!)"
                     >
-                      <ion-icon slot="icon-only" name="trash"></ion-icon>
+                      <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
                     </ion-button>
                   </div>
                 </ion-item>
