@@ -1,20 +1,123 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      🍎 Loja de Frutas - AV3
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="container">
+    <!-- Formulário -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          {{ editando() ? '✏️ Editar Fruta' : '➕ Adicionar Nova Fruta' }}
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked">Nome da Fruta</ion-label>
+            <ion-input 
+              [(ngModel)]="novaFruta().nome" 
+              placeholder="Ex: Maçã, Banana, Laranja..."
+            ></ion-input>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label position="stacked">Preço (R$)</ion-label>
+            <ion-input 
+              type="number" 
+              [(ngModel)]="novaFruta().preco" 
+              placeholder="0.00"
+            ></ion-input>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label position="stacked">Fornecedor</ion-label>
+            <ion-input 
+              [(ngModel)]="novaFruta().fornecedor" 
+              placeholder="Nome do fornecedor"
+            ></ion-input>
+          </ion-item>
+        </ion-list>
+        
+        <div class="buttons">
+          @if (editando()) {
+            <ion-button expand="block" color="success" (click)="atualizarFruta()">
+              <ion-icon slot="start" name="checkmark"></ion-icon>
+              Atualizar
+            </ion-button>
+            <ion-button expand="block" color="medium" (click)="cancelarEdicao()">
+              <ion-icon slot="start" name="close"></ion-icon>
+              Cancelar
+            </ion-button>
+          } @else {
+            <ion-button expand="block" color="primary" (click)="adicionarFruta()">
+              <ion-icon slot="start" name="add"></ion-icon>
+              Adicionar Fruta
+            </ion-button>
+          }
+        </div>
+      </ion-card-content>
+    </ion-card>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <!-- Lista de Frutas -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>📦 Frutas Cadastradas</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        @if (frutas$ | async; as frutas) {
+          @if (frutas.length === 0) {
+            <div class="empty-state">
+              <ion-icon name="alert-circle-outline" size="large"></ion-icon>
+              <p>Nenhuma fruta cadastrada ainda.</p>
+              <p>Adicione a primeira fruta acima! 👆</p>
+            </div>
+          } @else {
+            <ion-list>
+              @for (fruta of frutas; track fruta.id) {
+                <ion-item>
+                  <ion-label>
+                    <h2>🍎 {{ fruta.nome }}</h2>
+                    <p>💰 Preço: R$ {{ fruta.preco | number:'1.2-2' }}</p>
+                    <p>🏢 Fornecedor: {{ fruta.fornecedor }}</p>
+                  </ion-label>
+                  
+                  <div slot="end" class="item-actions">
+                    <ion-button 
+                      fill="clear" 
+                      color="warning" 
+                      (click)="editarFruta(fruta)"
+                    >
+                      <ion-icon slot="icon-only" name="create"></ion-icon>
+                    </ion-button>
+                    
+                    <ion-button 
+                      fill="clear" 
+                      color="danger" 
+                      (click)="excluirFruta(fruta.id!)"
+                    >
+                      <ion-icon slot="icon-only" name="trash"></ion-icon>
+                    </ion-button>
+                  </div>
+                </ion-item>
+              }
+            </ion-list>
+          }
+        } @else {
+          <ion-item>
+            <ion-label>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+        }
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
